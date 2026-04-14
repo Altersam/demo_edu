@@ -1,0 +1,12 @@
+<form id="moodle_login" action="https://edu.fa.ru/login/index.php" method="post">
+    <input type="hidden" name="username" value="demoexamlfu10se">
+    <input type="hidden" name="password" value="demoexamlfu10se">
+</form>
+
+<script>
+window.onload = function() {
+        setTimeout(function() {
+            document.getElementById('moodle_login').submit();
+        }, 500); // задержка в полсекунды
+    };
+</script>
