@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отчет о рабочих тратах (2024–2026)</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 2.5rem;
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            border-bottom: 3px solid #2563eb;
+            padding-bottom: 0.75rem;
+        }
+        .subtitle { color: #6b7280; font-style: italic; margin-bottom: 2rem; }
+        h2 {
+            font-size: 1.3rem;
+            color: #1e40af;
+            margin: 2rem 0 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid #e5e7eb;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 1.5rem;
+            font-size: 0.88rem;
+        }
+        th {
+            background: #f1f5f9;
+            color: #374151;
+            font-weight: 600;
+            text-align: left;
+            padding: 0.6rem 0.75rem;
+            border-bottom: 2px solid #d1d5db;
+            position: sticky;
+            top: 0;
+        }
+        th:last-child, td:last-child { text-align: right; }
+        th:nth-child(3), td:nth-child(3),
+        th:nth-child(4), td:nth-child(4),
+        th:nth-child(5), td:nth-child(5) { text-align: right; }
+        td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }
+        tr:hover { background: #f8fafc; }
+        .cheque-row { background: #fefce8; }
+        .cheque-row:hover { background: #fef9c3; }
+        .section-total {
+            font-weight: 700;
+            font-size: 1rem;
+            margin: 1rem 0 1.5rem;
+            padding: 0.75rem;
+            background: #eff6ff;
+            border-radius: 6px;
+            border-left: 4px solid #2563eb;
+        }
+        .summary {
+            margin-top: 2.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-radius: 8px;
+            border: 2px solid #2563eb;
+        }
+        .summary h2 { margin-top: 0; border-bottom: none; color: #1e3a8a; }
+        .summary table { margin: 0; }
+        .summary tr:last-child { font-weight: 700; font-size: 1.15rem; background: #1e3a8a; color: #fff; }
+        .summary tr:last-child td { color: #fff; border-bottom: none; }
+        .note {
+            margin-top: 1.5rem;
+            padding: 0.75rem 1rem;
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #92400e;
+        }
+        a { color: #2563eb; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .badge {
+            display: inline-block;
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-cheque { background: #fef3c7; color: #92400e; }
+        .badge-ym { background: #dbeafe; color: #1e40af; }
+        .badge-sub { background: #ede9fe; color: #5b21b6; }
+        .badge-usd { background: #fce7f3; color: #9d174d; }
+        @media print {
+            body { background: #fff; padding: 0; }
+            .container { box-shadow: none; padding: 1rem; }
+            a { color: #1a1a1a; }
+            th { position: static; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Отчет о рабочих тратах (2024–2026)</h1>
+        <p class="subtitle">Все покупки оплачены из личных средств.</p>
+
+        <h2>Все покупки</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:30%">Наименование</th>
+                    <th style="width:8%">Кол-во</th>
+                    <th style="width:12%">Цена за ед.</th>
+                    <th style="width:12%">Сумма</th>
+                    <th style="width:15%">Источник</th>
+                    <th style="width:23%">Ссылка</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Чек № 823 -->
+                <tr class="cheque-row"><td colspan="6" style="font-weight:600;color:#92400e;background:#fefce8;">Чек № 823 от 01.02.2025</td></tr>
+                <tr><td>В-ТОПе Микрофон беспроводной петличный для мобильного устройства, черный</td><td>1</td><td>1 250,00 ₽</td><td>1 250,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=В-ТОПе+Микрофон+беспроводной+петличный" target="_blank">Ozon</a></td></tr>
+
+                <!-- Чек № 4776 -->
+                <tr class="cheque-row"><td colspan="6" style="font-weight:600;color:#92400e;background:#fefce8;">Чек № 4776 от 03.03.2025</td></tr>
+                <tr><td>Микрофон головной для беспроводной карманный передатчик Shure SLX1 SLXD1, Mini 4 Pins xlr Connector, черный</td><td>2</td><td>1 323,00 ₽</td><td>2 646,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Микрофон+головной+Shure+SLX1+Mini+4+Pins+xlr" target="_blank">Ozon</a></td></tr>
+
+                <!-- Чек № 1967 -->
+                <tr class="cheque-row"><td colspan="6" style="font-weight:600;color:#92400e;background:#fefce8;">Чек № 1967 от 27.02.2025</td></tr>
+                <tr><td>Зарядное устройство USB 60W с кабелем</td><td>1</td><td>1 338,00 ₽</td><td>1 338,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Зарядное+устройство+USB+60W+с+кабелем" target="_blank">Ozon</a></td></tr>
+                <tr><td>Сетевое зарядное устройство HOCO C109A для телефона, блок питания USB, адаптер, быстрая зарядка, 18W</td><td>2</td><td>418,00 ₽</td><td>836,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=HOCO+C109A+зарядное+устройство+18W" target="_blank">Ozon</a></td></tr>
+                <tr><td>Кабель Type-C Type-C, 1 метр, 40 Гб/с, PD 240W, 8К 60 Гц, USB 4.0</td><td>1</td><td>591,00 ₽</td><td>591,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Кабель+Type-C+40Гб+PD+240W+USB+4.0" target="_blank">Ozon</a></td></tr>
+                <tr><td>Переходник Type-C двухсторонний папа-папа</td><td>3</td><td>251,00 ₽</td><td>753,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Переходник+Type-C+двухсторонний+папа-папа" target="_blank">Ozon</a></td></tr>
+                <tr><td>Переходник Type-C — USB</td><td>6</td><td>277,00 ₽</td><td>1 662,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Переходник+Type-C+USB" target="_blank">Ozon</a></td></tr>
+                <tr><td>Переходник Type-C двухсторонний папа-папа</td><td>2</td><td>251,00 ₽</td><td>502,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Переходник+Type-C+двухсторонний+папа-папа" target="_blank">Ozon</a></td></tr>
+                <tr><td>Переходник Type-C — USB</td><td>3</td><td>277,00 ₽</td><td>831,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Переходник+Type-C+USB" target="_blank">Ozon</a></td></tr>
+                <tr><td>Переходник Type-C — USB</td><td>1</td><td>277,00 ₽</td><td>277,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Переходник+Type-C+USB" target="_blank">Ozon</a></td></tr>
+
+                <!-- Чек № 1778 -->
+                <tr class="cheque-row"><td colspan="6" style="font-weight:600;color:#92400e;background:#fefce8;">Чек № 1778 от 22.04.2025</td></tr>
+                <tr><td>Defender Кабель USB 2.0 Type-A/Type-B, 5 м, черный</td><td>1</td><td>306,00 ₽</td><td>306,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Defender+кабель+USB+2.0+Type-A+Type-B+5м" target="_blank">Ozon</a></td></tr>
+                <tr><td>AJNWNM Аккумуляторная батарейка Крона (6F22, 1604D), 9 В, 1500 мАч, 2 шт</td><td>3</td><td>1 025,00 ₽</td><td>3 075,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Батарейка+Крона+9В+1500мАч+аккумуляторная" target="_blank">Ozon</a></td></tr>
+                <tr><td>Кабель Jack 6.3 mono — Jack 6.3 mono, 5м, коммутационный шнур инструментальный</td><td>2</td><td>407,00 ₽</td><td>814,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Кабель+Jack+6.3+mono+5м" target="_blank">Ozon</a></td></tr>
+                <tr><td>Кабель Jack 6.3 — Jack 6.3, 3 метра</td><td>3</td><td>589,00 ₽</td><td>1 767,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Кабель+Jack+6.3+3+метра" target="_blank">Ozon</a></td></tr>
+
+                <!-- Чек № 2064 -->
+                <tr class="cheque-row"><td colspan="6" style="font-weight:600;color:#92400e;background:#fefce8;">Чек № 2064 от 01.09.2025</td></tr>
+                <tr><td>3D ручка Myriwell RP100C обновленная версия 2024, с возможностью работы с 3 видами пластика (Фиолетовый)</td><td>1</td><td>2 852,36 ₽</td><td>2 852,36 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=3D+ручка+Myriwell+RP100C" target="_blank">Ozon</a></td></tr>
+                <tr><td>Цифровое пианино YAMAHA P-45B, 88 клавиш, 10 тембров, без подставки</td><td>1</td><td>35 490,11 ₽</td><td>35 490,11 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=YAMAHA+P-45B+цифровое+пианино" target="_blank">Ozon</a></td></tr>
+                <tr><td>Переходник угловой Type-C/Type-C Вариант B</td><td>5</td><td>352,64 ₽</td><td>1 763,20 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Переходник+угловой+Type-C+Type-C" target="_blank">Ozon</a></td></tr>
+                <tr><td>Кабель для быстрой зарядки USB Type-C 3м для мобильных, серебристый, нейлон в тканевой оплетке</td><td>10</td><td>338,47 ₽</td><td>3 384,70 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Кабель+USB+Type-C+3м+быстрая+зарядка" target="_blank">Ozon</a></td></tr>
+                <tr><td>Кабель для зарядки type-c 5 метров</td><td>5</td><td>470,83 ₽</td><td>2 354,15 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Кабель+type-c+5+метров" target="_blank">Ozon</a></td></tr>
+                <tr><td>Рация двухдиапазонная Baofeng UV-5R (радиостанция) 5W, черная</td><td>4</td><td>1 644,08 ₽</td><td>6 576,32 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Рация+Baofeng+UV-5R+5W" target="_blank">Ozon</a></td></tr>
+                <tr><td>ACEMAGIC Мини-ПК CK10 (Intel Core i5-12450H, RAM 16 ГБ, SSD 512 ГБ, Intel UHD Graphics, Windows 11 Pro), серый</td><td>1</td><td>28 112,59 ₽</td><td>28 112,59 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=ACEMAGIC+CK10+Intel+Core+i5-12450H" target="_blank">Ozon</a></td></tr>
+                <tr><td>Доставка</td><td>1</td><td>1 183,57 ₽</td><td>1 183,57 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td>—</td></tr>
+                <tr><td>Таможенный платеж</td><td>1</td><td>3 191,08 ₽</td><td>3 191,08 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td>—</td></tr>
+
+                <!-- Чек № 1909 -->
+                <tr class="cheque-row"><td colspan="6" style="font-weight:600;color:#92400e;background:#fefce8;">Чек № 1909 от 11.10.2025</td></tr>
+                <tr><td>Шайба М3 увеличенная, 100 штук. Шайба плоская, усиленная, кузовная, DIN9021</td><td>1</td><td>120,15 ₽</td><td>120,15 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Шайба+М3+увеличенная+DIN9021+100шт" target="_blank">Ozon</a></td></tr>
+                <tr><td>Подшипник NSK 693ZZ 3х8х4 мм, 2 шт</td><td>2</td><td>417,22 ₽</td><td>834,44 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Подшипник+NSK+693ZZ+3х8х4" target="_blank">Ozon</a></td></tr>
+                <tr><td>Пружина сжатия D6,2; d0,7; L30 (10 шт. в упаковке)</td><td>1</td><td>338,69 ₽</td><td>338,69 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Пружина+сжатия+D6.2+d0.7+L30" target="_blank">Ozon</a></td></tr>
+                <tr><td>Подшипник 608z, 8х22х7, УСИЛЕННЫЙ, СПЗ-64</td><td>1</td><td>514,66 ₽</td><td>514,66 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Подшипник+608z+8х22х7" target="_blank">Ozon</a></td></tr>
+                <tr><td>Гайка М3 стопорная, 20шт, самоконтрящаяся, с нейлоновым кольцом, оцинкованная, DIN985</td><td>1</td><td>91,77 ₽</td><td>91,77 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Гайка+М3+стопорная+DIN985+20шт" target="_blank">Ozon</a></td></tr>
+                <tr><td>Винт цил.гол. M3х20/18 в/ш нерж. А2 DIN 912 НР, 10 шт</td><td>1</td><td>116,37 ₽</td><td>116,37 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Винт+M3x20+DIN+912+нерж+А2" target="_blank">Ozon</a></td></tr>
+                <tr><td>Винт DIN 912 М3х18 с цилиндрической головкой, 20 шт</td><td>1</td><td>193,95 ₽</td><td>193,95 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Винт+DIN+912+М3х18" target="_blank">Ozon</a></td></tr>
+                <tr><td>Винт п/кр M3х8 в/ш нерж. А2 ISO 7380, 10 шт</td><td>2</td><td>125,83 ₽</td><td>251,66 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Винт+M3x8+ISO+7380+нерж+А2" target="_blank">Ozon</a></td></tr>
+                <tr><td>Винт цил.гол. M3х16/16 в/ш нерж. А2 DIN 912 ПР, 10 шт</td><td>1</td><td>155,16 ₽</td><td>155,16 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Винт+M3x16+DIN+912+нерж+А2" target="_blank">Ozon</a></td></tr>
+                <tr><td>Винт DIN 912 3x25 цилиндрический с внутренним шестигранником, класс прочности 12.9, оксидированный, Н/Р, 4 шт</td><td>1</td><td>120,15 ₽</td><td>120,15 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Винт+DIN+912+3x25+12.9" target="_blank">Ozon</a></td></tr>
+                <tr><td>Дюбель универсальный Fischer DUOPOWER 6x30, 10 шт</td><td>2</td><td>208,14 ₽</td><td>416,28 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Fischer+DUOPOWER+6x30" target="_blank">Ozon</a></td></tr>
+                <tr><td>Винт п/кр M3х14 в/ш нерж. А2 ISO 7380, 10 шт</td><td>4</td><td>157,05 ₽</td><td>628,20 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Винт+M3x14+ISO+7380+нерж+А2" target="_blank">Ozon</a></td></tr>
+                <tr><td>Обработка заказа в пункте выдачи</td><td>1</td><td>179,72 ₽</td><td>179,72 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td>—</td></tr>
+                <tr><td>Обработка заказа в пункте выдачи</td><td>1</td><td>35,80 ₽</td><td>35,80 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td>—</td></tr>
+
+                <!-- Чек № 3875 -->
+                <tr class="cheque-row"><td colspan="6" style="font-weight:600;color:#92400e;background:#fefce8;">Чек № 3875 от 31.10.2025</td></tr>
+                <tr><td>120 шт. M3X5.7-OD4.6 резьбовая накатная латунная резьбовая термостойкая вставная гайка для 3D-принтера</td><td>1</td><td>269,00 ₽</td><td>269,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Резьбовая+латунная+вставка+M3+3D+принтер+120шт" target="_blank">Ozon</a></td></tr>
+
+                <!-- Чек № 2831 -->
+                <tr class="cheque-row"><td colspan="6" style="font-weight:600;color:#92400e;background:#fefce8;">Чек № 2831 от 17.11.2025</td></tr>
+                <tr><td>2в1 Петличные микрофоны беспроводные 3.5mm AUX K35 (2 беспроводных микрофона петлички с приемником аукс 3,5мм)</td><td>1</td><td>890,14 ₽</td><td>890,14 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Микрофон+петличный+беспроводной+K35+3.5mm" target="_blank">Oзон</a></td></tr>
+                <tr><td>Курьерская доставка</td><td>1</td><td>118,86 ₽</td><td>118,86 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td>—</td></tr>
+
+                <!-- Чек № 608 -->
+                <tr class="cheque-row"><td colspan="6" style="font-weight:600;color:#92400e;background:#fefce8;">Чек № 608 от 12.02.2026</td></tr>
+                <tr><td>Переходник на евро вилку / Сетевой адаптер универсальный на все типы вилок / Hoco AC6, черный</td><td>1</td><td>379,00 ₽</td><td>379,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td><a href="https://www.ozon.ru/search/?text=Hoco+AC6+переходник+евро+вилку" target="_blank">Ozon</a></td></tr>
+                <tr><td>Курьерская доставка</td><td>1</td><td>78,00 ₽</td><td>78,00 ₽</td><td><span class="badge badge-cheque">Ozon, чек</span></td><td>—</td></tr>
+
+                <!-- 1.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#1e40af;background:#eff6ff;">Скриншот 1.png — Яндекс.Маркет</td></tr>
+                <tr><td>Дюбель универсальный Fischer DUOPOWER 8x65, 20 шт. Цвет: красный, серый</td><td>1</td><td>551 ₽</td><td>551 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Дюбель+Fischer+DUOPOWER+8x65+20шт" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>Набор удлинителей адаптеров для бит с фиксатором, 3шт, 60, 100, 150 мм</td><td>1</td><td>312 ₽</td><td>312 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Набор+удлинителей+для+бит+с+фиксатором+3шт" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>Сетевой фильтр тройник разветвитель 3 розетки с USB и Type-C, черный</td><td>2</td><td>611 ₽</td><td>1 222 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Сетевой+фильтр+тройник+3+розетки+USB+Type-C" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>Дюбель универсальный Fischer DUOPOWER, 10 шт</td><td>2</td><td>261 ₽</td><td>522 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Дюбель+Fischer+DUOPOWER+10шт" target="_blank">Яндекс.Маркет</a></td></tr>
+
+                <!-- 2.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#1e40af;background:#eff6ff;">Скриншот 2.png — Яндекс.Маркет</td></tr>
+                <tr><td>ONKRON кронштейн для телевизора настенный 32"-70" наклонный, чёрный TM5</td><td>1</td><td>2 001 ₽</td><td>2 001 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=ONKRON+TM5+кронштейн+настенный+32-70" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>BESSTER Кронштейн для ТВ, универсальная настольная подставка 14"-42" для телевизора до 35кг</td><td>1</td><td>1 198 ₽</td><td>1 198 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=BESSTER+кронштейн+для+ТВ+настольный+14-42" target="_blank">Яндекс.Маркет</a></td></tr>
+
+                <!-- 3.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#1e40af;background:#eff6ff;">Скриншот 3.png — Яндекс.Маркет</td></tr>
+                <tr><td>PLA пластик для 3d принтеров черный "НИТ", 1 кг</td><td>1</td><td>1 087 ₽</td><td>1 087 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=PLA+пластик+НИТ+1кг+черный" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>Wi-Fi-адаптер</td><td>1</td><td>549 ₽</td><td>549 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Wi-Fi+адаптер" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>Блок питания Raspberry Pi 5 (27W, Type C), фиолетовый</td><td>1</td><td>2 098 ₽</td><td>2 098 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Блок+питания+Raspberry+Pi+5+27W+Type+C" target="_blank">Яндекс.Маркет</a></td></tr>
+
+                <!-- 4.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#1e40af;background:#eff6ff;">Скриншот 4.png — Яндекс.Маркет</td></tr>
+                <tr><td>Сетевой фильтр с предохранителем, удлинитель сетевой с USB, черный 2 метра</td><td>1</td><td>692 ₽</td><td>692 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Сетевой+фильтр+с+USB+2+метра" target="_blank">Яндекс.Маркет</a></td></tr>
+
+                <!-- 5.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#1e40af;background:#eff6ff;">Скриншот 5.png — Яндекс.Маркет</td></tr>
+                <tr><td>10.1"-дюймовый сенсорный монитор для Raspberry Pi и Orange Pi экран с ножками</td><td>1</td><td>7 270 ₽</td><td>7 270 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=10.1+сенсорный+монитор+Raspberry+Pi" target="_blank">Яндекс.Маркет</a></td></tr>
+
+                <!-- 6.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#1e40af;background:#eff6ff;">Скриншот 6.png — Яндекс.Маркет</td></tr>
+                <tr><td>USB-зарядное устройство с 30 портами, концентратором 150 Вт, универсальная настольная станция для быстрой зарядки</td><td>1</td><td>1 618 ₽</td><td>1 618 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=USB+зарядное+устройство+30+портов+150W" target="_blank">Яндекс.Маркет</a></td></tr>
+
+                <!-- 7.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#1e40af;background:#eff6ff;">Скриншот 7.png — Яндекс.Маркет</td></tr>
+                <tr><td>Провода для пайки 22 AWG двойной черный-красный 100шт, по 20см, луженый</td><td>1</td><td>869 ₽</td><td>869 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Провода+для+пайки+22+AWG+100шт" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>Понижающий DC-DC преобразователь Mini360</td><td>3</td><td>137 ₽</td><td>411 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=DC-DC+преобразователь+Mini360" target="_blank">Яндекс.Маркет</a></td></tr>
+
+                <!-- 8.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#1e40af;background:#eff6ff;">Скриншот 8.png — Яндекс.Маркет</td></tr>
+                <tr><td>Микрофон петличный беспроводной в кейсе с шумоподавлением для IPhone Lightning, телефона и компьютера</td><td>1</td><td>926 ₽</td><td>926 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Микрофон+петличный+беспроводной+Lightning" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>Штатив для телефона/камеры (цвет: черный, светло-коричневый, малиновый)</td><td>1</td><td>2 736 ₽</td><td>2 736 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Штатив+для+телефона+камеры" target="_blank">Яндекс.Маркет</a></td></tr>
+
+                <!-- 9.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#1e40af;background:#eff6ff;">Скриншот 9.png — Яндекс.Маркет</td></tr>
+                <tr><td>Кабель Oculus Link Type C — USB 3.2 (Oculus/Meta Quest 1/2/3, Pico 4) 5м, Fast Charging & PC Data Transfer 60W/5A</td><td>1</td><td>952 ₽</td><td>952 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Кабель+Oculus+Link+Type+C+USB+5м" target="_blank">Яндекс.Маркет</a></td></tr>
+
+                <!-- 10.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#1e40af;background:#eff6ff;">Скриншот 10.png — Яндекс.Маркет</td></tr>
+                <tr><td>Ключ активации Microsoft Windows 11 Pro, для ПК, 1 лицензия</td><td>1</td><td>172 ₽</td><td>172 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Microsoft+Windows+11+Pro+ключ" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>Microsoft Office 2021 Professional Plus на 1 ПК, электронный ключ</td><td>1</td><td>81 ₽</td><td>81 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Microsoft+Office+2021+Professional+Plus+ключ" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>BRAUBERG Маркер меловой POP-ART 5 мм, желтый</td><td>2</td><td>337 ₽</td><td>674 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=BRAUBERG+Маркер+меловой+POP-ART+5мм" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>BRAUBERG Маркер меловой POP-ART 5 мм, зеленый</td><td>2</td><td>337 ₽</td><td>674 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=BRAUBERG+Маркер+меловой+POP-ART+5мм" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>BRAUBERG Маркер меловой POP-ART 5 мм, белый</td><td>5</td><td>337 ₽</td><td>1 685 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=BRAUBERG+Маркер+меловой+POP-ART+5мм" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>Плата подключения экструдера для 3D принтеров Bambu Lab X1E</td><td>1</td><td>2 228 ₽</td><td>2 228 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Плата+экструдера+Bambu+Lab+X1E" target="_blank">Яндекс.Маркет</a></td></tr>
+                <tr><td>Плата интерфейса датчика нагрев. элемента Bambu Lab X и P</td><td>1</td><td>1 669 ₽</td><td>1 669 ₽</td><td><span class="badge badge-ym">Яндекс.Маркет</span></td><td><a href="https://market.yandex.ru/search?text=Плата+интерфейса+датчика+Bambu+Lab" target="_blank">Яндекс.Маркет</a></td></tr>
+
+                <!-- 11.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#5b21b6;background:#f5f3ff;">Скриншот 11.png — Jayflow / OpenCode подписки и кредиты</td></tr>
+                <tr><td>Тариф flow-start-plan (27.04.2026)</td><td>1</td><td>790 ₽</td><td>790 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Покупка 500 кредитов (31.03.2026)</td><td>1</td><td>350 ₽</td><td>350 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Тариф flow-start-plan (27.03.2026)</td><td>1</td><td>790 ₽</td><td>790 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Покупка 500 кредитов (26.03.2026)</td><td>1</td><td>350 ₽</td><td>350 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Покупка 500 кредитов (26.03.2026)</td><td>1</td><td>350 ₽</td><td>350 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Покупка 500 кредитов (26.03.2026)</td><td>1</td><td>350 ₽</td><td>350 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Покупка 500 кредитов (26.03.2026)</td><td>1</td><td>350 ₽</td><td>350 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Покупка 500 кредитов (25.03.2026)</td><td>1</td><td>350 ₽</td><td>350 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Тариф flow-start-plan (27.02.2026)</td><td>1</td><td>790 ₽</td><td>790 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Покупка 500 кредитов (19.02.2026)</td><td>1</td><td>350 ₽</td><td>350 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Покупка 500 кредитов (19.02.2026)</td><td>1</td><td>350 ₽</td><td>350 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Покупка 500 кредитов (29.01.2026)</td><td>1</td><td>350 ₽</td><td>350 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Покупка 500 кредитов (28.01.2026)</td><td>1</td><td>350 ₽</td><td>350 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+                <tr><td>Тариф Start (27.01.2026)</td><td>1</td><td>790 ₽</td><td>790 ₽</td><td><span class="badge badge-sub">Подписка</span></td><td>—</td></tr>
+
+                <!-- 12.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#5b21b6;background:#f5f3ff;">Скриншот 12.png — Пополнения баланса нейросети</td></tr>
+                <tr><td>Пополнение баланса (23.09.2025 16:14)</td><td>1</td><td>390 ₽</td><td>390 ₽</td><td><span class="badge badge-sub">Нейросеть</span></td><td>—</td></tr>
+                <tr><td>Пополнение баланса (12.09.2025 10:48)</td><td>1</td><td>990 ₽</td><td>990 ₽</td><td><span class="badge badge-sub">Нейросеть</span></td><td>—</td></tr>
+                <tr><td>Пополнение баланса (10.09.2025 11:04)</td><td>1</td><td>390 ₽</td><td>390 ₽</td><td><span class="badge badge-sub">Нейросеть</span></td><td>—</td></tr>
+
+                <!-- 13.png -->
+                <tr><td colspan="6" style="font-weight:600;color:#9d174d;background:#fdf2f8;">Скриншот 13.png — Платежи в USD</td></tr>
+                <tr><td>Платеж pay_01KQY6WAZNY3NB1WA4VQCJSBRQ (May 6, 8:36 AM)</td><td>1</td><td>$5.00</td><td>~450 ₽</td><td><span class="badge badge-usd">USD</span></td><td>—</td></tr>
+                <tr><td>Платеж pay_01KQQ8ZSWSHGWZJWGNXN038FA2 (May 3, 3:58 PM)</td><td>1</td><td>$20.00</td><td>~1 800 ₽</td><td><span class="badge badge-usd">USD</span></td><td>—</td></tr>
+                <tr><td>Платеж pay_01KQCMRRPZBWX5AXZJFYJ4ZT81 (Apr 29, 12:50 PM)</td><td>1</td><td>$10.00</td><td>~900 ₽</td><td><span class="badge badge-usd">USD</span></td><td>—</td></tr>
+                <tr><td>Платеж pay_01KQA37SWQ9R0GDZTEX0DF284A (Apr 28, 1:07 PM)</td><td>1</td><td>$24.00</td><td>~2 160 ₽</td><td><span class="badge badge-usd">USD</span></td><td>—</td></tr>
+                <tr><td>Платеж pay_01KPHWZXB3NXEZ4ZNT4X7XFW13D (Apr 23, 10:59 AM)</td><td>1</td><td>$18.00</td><td>~1 620 ₽</td><td><span class="badge badge-usd">USD</span></td><td>—</td></tr>
+                <tr><td>Платеж pay_01KNP4JRRJQEGC57GYKN04F764 (Apr 8, 8:50 AM)</td><td>1</td><td>$10.00</td><td>~900 ₽</td><td><span class="badge badge-usd">USD</span></td><td>—</td></tr>
+                <tr><td>Платеж pay_01KNNY86KN9H845NFXRCV85S61 (Apr 8, 7:00 AM)</td><td>1</td><td>$20.00</td><td>~1 800 ₽</td><td><span class="badge badge-usd">USD</span></td><td>—</td></tr>
+            </tbody>
+        </table>
+
+        <div class="summary">
+            <h2>Сводная таблица</h2>
+            <table>
+                <thead>
+                    <tr><th>Категория</th><th>Сумма</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Чеки Ozon (PDF)</td><td>107 288,08 ₽</td></tr>
+                    <tr><td>Яндекс.Маркет (скриншоты PNG)</td><td>32 197,00 ₽</td></tr>
+                    <tr><td>Подписки Jayflow/OpenCode (скриншоты PNG)</td><td>8 430,00 ₽</td></tr>
+                    <tr><td>Платежи USD ~$107 × 90 ₽ (скриншот PNG)</td><td>~9 630,00 ₽</td></tr>
+                    <tr><td><strong>ИТОГО</strong></td><td><strong>~157 545,08 ₽</strong></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="note">
+            <strong>Примечание:</strong> Сумма транзакций в долларах (скриншот 13.png) пересчитана по приблизительному курсу 90 ₽/$. Точная сумма может отличаться в зависимости от курса на момент покупки.
+        </div>
+    </div>
+</body>
+</html>
