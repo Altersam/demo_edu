@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>ОГЭ Русский: Шпаргалка</title>
+<title>ОГЭ Русский: Шпаргалка 3.0</title>
 <style>
   :root {
     --bg-color: #121212;
@@ -15,6 +15,7 @@
     --danger: #cf6679;
     --warning: #ffb74d;
     --success: #4caf50;
+    --info: #64b5f6;
     --nav-height: 60px;
     --header-height: 50px;
   }
@@ -26,11 +27,10 @@
     background-color: var(--bg-color);
     color: var(--text-main);
     line-height: 1.5;
-    padding-bottom: calc(var(--nav-height) + 20px); /* Отступ под меню */
+    padding-bottom: calc(var(--nav-height) + 20px);
     font-size: 16px;
   }
 
-  /* --- Header --- */
   header {
     position: sticky;
     top: 0;
@@ -48,7 +48,6 @@
   header h1 { font-size: 1.2rem; font-weight: 700; color: var(--accent); }
   .theme-toggle { cursor: pointer; font-size: 1.2rem; }
 
-  /* --- Content Sections --- */
   main { padding: 16px; max-width: 800px; margin: 0 auto; }
   
   section { display: none; animation: fadeIn 0.3s ease; }
@@ -64,7 +63,6 @@
     padding-left: 12px;
   }
 
-  /* --- Cards & Accordions --- */
   .card {
     background: var(--card-bg);
     border-radius: 12px;
@@ -104,7 +102,6 @@
   .content ul { padding-left: 20px; margin-top: 8px; }
   .content li { margin-bottom: 6px; }
 
-  /* --- Badges & Highlights --- */
   .badge {
     display: inline-block;
     padding: 2px 8px;
@@ -118,6 +115,7 @@
   .b-trap { background: rgba(207, 102, 121, 0.2); color: var(--danger); border: 1px solid var(--danger); }
   .b-tip { background: rgba(76, 175, 80, 0.2); color: var(--success); border: 1px solid var(--success); }
   .b-new { background: rgba(187, 134, 252, 0.2); color: var(--accent); border: 1px solid var(--accent); }
+  .b-info { background: rgba(100, 181, 246, 0.2); color: var(--info); border: 1px solid var(--info); }
 
   .example {
     background: rgba(255, 255, 255, 0.05);
@@ -129,7 +127,6 @@
     font-size: 0.9rem;
   }
 
-  /* --- Bottom Navigation --- */
   nav {
     position: fixed;
     bottom: 0;
@@ -163,11 +160,9 @@
   .nav-item.active { color: var(--accent); }
   .nav-item.active span { transform: scale(1.1); }
 
-  /* --- Utility --- */
   .highlight-text { color: var(--accent); font-weight: bold; }
   .trap-text { color: var(--danger); font-weight: bold; }
   
-  /* Light Theme Override */
   body.light {
     --bg-color: #f5f5f5;
     --card-bg: #ffffff;
@@ -182,12 +177,28 @@
   body.light details[open] summary { background: rgba(0,0,0,0.02); border-bottom: 1px solid #eee; }
   body.light .example { background: rgba(0,0,0,0.03); }
 
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 10px 0;
+  }
+  .stat-box {
+    background: rgba(187, 134, 252, 0.1);
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+  .stat-value { font-size: 1.5rem; font-weight: bold; color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--text-muted); }
+
 </style>
 </head>
 <body>
 
 <header>
-  <h1>🎓 ОГЭ Шпаргалка</h1>
+  <h1>🎓 ОГЭ Шпаргалка 3.0</h1>
   <div class="theme-toggle" onclick="toggleTheme()">🌓</div>
 </header>
 
@@ -203,6 +214,23 @@
         <div class="content">
           Сказуемое — это <strong>глагол в форме наклонения</strong> (изъявительное, повелительное, условное).<br>
           У него должно быть <strong>личное окончание</strong> или форма рода/времени (в прошедшем времени).
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-trap">Ловушка</span> 3 типичные ошибки в задании 2</summary>
+        <div class="content">
+          <ul>
+            <li><strong>Избыточно выписанные слова</strong> — захватили дополнение или обстоятельство</li>
+            <li><strong>Неполная основа</strong> — выписали только часть однородных сказуемых или подлежащих</li>
+            <li><strong>Слова из разных частей</strong> — подлежащее из главной части, сказуемое из придаточной</li>
+          </ul>
+          <div class="example">
+            ❌ «Не могут <u>заглянуть завтра</u>» — «завтра» лишнее!<br>
+            ✅ Сказуемое: <strong>не могут заглянуть</strong>.
+          </div>
         </div>
       </details>
     </div>
@@ -233,7 +261,7 @@
 
     <div class="card">
       <details>
-        <summary><span class="badge b-new">NEW</span> «Удалось установить»</summary>
+        <summary><span class="badge b-trap">Ловушка</span> «Удалось установить»</summary>
         <div class="content">
           В школе: <strong>«Удалось»</strong> — это самостоятельное сказуемое.<br>
           Инфинитив («установить») — это <strong>ДОПОЛНЕНИЕ</strong>.<br>
@@ -259,6 +287,24 @@
   <!-- SECTION 2: ПУНКТУАЦИЯ -->
   <section id="sec-punct">
     <h2>Пунктуация и Синтаксис</h2>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-new">NEW</span> Приложение vs Вставная конструкция</summary>
+        <div class="content">
+          <strong>Приложение</strong> — это определение, выраженное существительным. К нему можно задать вопрос.<br>
+          <div class="example">
+            Эверест — <u>высокая гора</u> — находится в Азии.<br>
+            (Какой Эверест? → Высокая гора)
+          </div>
+          <strong>Вставная конструкция</strong> — НЕ член предложения, вопрос не задается, часто в скобках.<br>
+          <div class="example">
+            Эверест (она находится в Азии) — высокая гора.<br>
+            Может быть даже смайликом 😊 или отдельным предложением!
+          </div>
+        </div>
+      </details>
+    </div>
 
     <div class="card">
       <details>
@@ -306,6 +352,16 @@
           <strong>НЕ являются вводными</strong> (и не обособляются):<br>
           словно, будто, как будто, вряд ли, навряд ли, именно, даже, приблизительно.<br>
           <strong>Частица «Вообще-то»</strong> — тоже НЕ вводное слово!
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-info">Важно</span> Задание 4: порядок цифр!</summary>
+        <div class="content">
+          В задании 4 (пунктуационный анализ) <strong>порядок цифр ВАЖЕН</strong>!<br>
+          В остальных заданиях можно писать в любом порядке, но лучше по возрастанию.
         </div>
       </details>
     </div>
@@ -358,6 +414,44 @@
         </div>
       </details>
     </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-new">NEW</span> Ляг vs Ляжь</summary>
+        <div class="content">
+          <strong>Правильно:</strong> ЛЯГ (и лягте во мн.ч.)<br>
+          <strong>«Ляжь»</strong> — это диалект или ошибка!<br>
+          <em>Запоминалка:</em> ляг, как «флаг» (без мягкого знака).
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-new">NEW</span> Склонение числительных</summary>
+        <div class="content">
+          <strong>Порядковые</strong> — изменяется только последнее слово: к 2026-<u>му</u> году.<br>
+          <strong>Количественные</strong> — склоняется каждый корень!<br>
+          <div class="example">
+            479 рублей: нет <strong>четырёхсот семидесяти девяти</strong><br>
+            • 40, 90, 100 — только 2 формы (90 и 90)<br>
+            • 200, 300, 400 — особые формы (к четырёмстам)
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-new">NEW</span> Степени сравнения</summary>
+        <div class="content">
+          <strong>Простая:</strong> добрее, быстрее, умнее<br>
+          <strong>Сложная:</strong> более добрый, более быстрый<br>
+          <div class="trap-text">❌ НЕЛЬЗЯ: более добрее (смешение форм!)</div>
+          <em>В задании 8:</em> читай внимательно, какая степень нужна.
+        </div>
+      </details>
+    </div>
   </section>
 
   <!-- SECTION 4: ЛЕКСИКА -->
@@ -389,6 +483,33 @@
 
     <div class="card">
       <details>
+        <summary><span class="badge b-new">NEW</span> Задание 12: замена синонимом</summary>
+        <div class="content">
+          Фразеологизм нужно заменить <strong>НЕЙТРАЛЬНЫМ</strong> синонимом, не любым!<br>
+          <div class="example">
+            «поднимут на смех» → <strong>засмеют</strong> (а не «высмеют» или «осмеют»)<br>
+            Учи список фразеологизмов ФИПИ заранее!
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-new">NEW</span> Антонимы в бланке</summary>
+        <div class="content">
+          Если нужно записать несколько слов — пиши <strong>слитно</strong>!<br>
+          Можно в той форме, что в тексте (не обязательно в начальную переводить).<br>
+          <div class="example">
+            ❌ рассказывать замолчать<br>
+            ✅ рассказывает замолчал
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
         <summary>Метафора и Ирония</summary>
         <div class="content">
           <strong>Метафора:</strong> скрытое сравнение («санитарно-гигиенические действия вражеского стана» = уборка грязи).<br>
@@ -398,7 +519,40 @@
     </div>
   </section>
 
-  <!-- SECTION 5: ИЗЛОЖЕНИЕ И СОЧИНЕНИЕ -->
+  <!-- SECTION 5: СЛОВОСОЧЕТАНИЕ -->
+  <section id="sec-phrase">
+    <h2>Словосочетание (задание 9)</h2>
+
+    <div class="card">
+      <details open>
+        <summary><span class="badge b-info">Важно</span> 3 вида связи</summary>
+        <div class="content">
+          <ul>
+            <li><strong>Согласование</strong> — зависимое слово = прилагательное/причастие (красивый дом)</li>
+            <li><strong>Управление</strong> — зависимое = сущ. с предлогом или без (кофе из Турции)</li>
+            <li><strong>Примыкание</strong> — зависимое = неизменяемая часть речи (кофе по-турецки, люблю читать)</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-tip">Алгоритм</span> Как преобразовать связь</summary>
+        <div class="content">
+          <strong>Главное слово оставляем БЕЗ изменений!</strong><br>
+          <div class="example">
+            <strong>Кофе по-турецки</strong> (примыкание)<br>
+            → <strong>Турецкий кофе</strong> (согласование)<br>
+            → <strong>Кофе из Турции</strong> (управление)<br>
+          </div>
+          <em>Главное:</em> не перепутай, какое слово главное!
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- SECTION 6: ИЗЛОЖЕНИЕ И СОЧИНЕНИЕ -->
   <section id="sec-writing">
     <h2>Изложение и Сочинение</h2>
 
@@ -407,10 +561,113 @@
         <summary><span class="badge b-tip">Стратегия</span> Изложение (6 баллов)</summary>
         <div class="content">
           <ul>
-            <li><strong>3 абзаца</strong> — всегда! (По микротемам).</li>
-            <li><strong>Сжатие:</strong> Убирай вводные слова, эпитеты, прямую речь, эмоции. Оставляй факты.</li>
-            <li><strong>Даты/Фамилии:</strong> Не помнишь точно? Не пиши! Замени на «один ученый», «в то время».</li>
-            <li><strong>Проверка:</strong> Читай с конца (по словам), чтобы не «проглатывать» ошибки.</li>
+            <li><strong>Минимум 3 абзаца</strong>, можно 4-5 (по логике СВОЕГО текста!)</li>
+            <li><strong>Сохраняй ВСЕ микротемы</strong> авторского текста</li>
+            <li><strong>Сохраняй стиль</strong> (публицистический или художественный)</li>
+            <li><strong>НЕ меняй лицо повествования</strong> (не пиши от себя!)</li>
+            <li><strong>Сжатие:</strong> Убирай вводные слова, эпитеты, прямую речь, эмоции</li>
+            <li><strong>Даты/Фамилии:</strong> Не помнишь точно? Не пиши!</li>
+            <li><strong>Проверка:</strong> Читай с конца (по словам)</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+     <div class="card">
+      <details>
+        <summary><span class="badge b-new">NEW</span> Сочинение (13.1–13.3) — НОВЫЙ ФОРМАТ</summary>
+        <div class="content">
+          Все три задания теперь <strong>одинаковы</strong>!<br>
+          <ul>
+            <li><strong>Прямой, конкретный, однозначный ответ</strong> на вопрос</li>
+            <li><strong>Опора на исходный текст</strong> (не придумывай от себя!)</li>
+            <li><strong>2 примера из текста</strong> с пояснением (не просто номера предложений!)</li>
+            <li><strong>Пересказ с элементами цитирования</strong> — пиши связный текст</li>
+          </ul>
+          <div class="example">
+            ❌ «В предложении 17 видно...» (без пояснения)<br>
+            ✅ «Героиня хотела познакомиться ближе. Об этом говорится в предложении 17, где...»
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-info">Шкала баллов</span> 33–37 максимум</summary>
+        <div class="content">
+          <div class="stats-grid">
+            <div class="stat-box">
+              <div class="stat-value">33-37</div>
+              <div class="stat-label">максимум</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value">28+</div>
+              <div class="stat-label">пятёрка</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value">140+</div>
+              <div class="stat-label">слов в сочинении</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-value">6</div>
+              <div class="stat-label">макс. за изложение</div>
+            </div>
+          </div>
+          <div class="example">
+            💡 <strong>Лайфхак:</strong> Если опоздал на изложение, но написал сочинение 140+ слов — его могут засчитать как сумму двух!
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-new">NEW</span> Оформление бланков</summary>
+        <div class="content">
+          <ul>
+            <li>Цифры пиши <strong>ПО ВОЗРАСТАНИЮ</strong> (147, а не 741)</li>
+            <li>В задании <strong>4 — порядок цифр ВАЖЕН</strong>!</li>
+            <li>Компьютер примет любой порядок, но проверяют люди</li>
+            <li>Нестандартный порядок повышает риск ошибки эксперта</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- SECTION 7: ЛАЙФХАКИ -->
+  <section id="sec-hacks">
+    <h2>Лайфхаки и Стратегия</h2>
+
+    <div class="card">
+      <details open>
+        <summary><span class="badge b-new">NEW</span> Метод спортсмена 🏆</summary>
+        <div class="content">
+          <strong>Решай каждое задание как отдельное очко!</strong><br>
+          <ul>
+            <li>Сконцентрируйся на конкретном задании здесь и сейчас</li>
+            <li>Сразу после решения — <strong>переноси ответ в бланк</strong></li>
+            <li>Проверяй в момент переноса, а не в конце всей работы</li>
+            <li>Не перепроверяй по 100 раз — экономия <strong>30+ минут</strong>!</li>
+          </ul>
+          <div class="example">
+            «Я сейчас это конкретное очко выиграю» — а не «потом всё перепроверю»
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-tip">Совет</span> Используй маркер</summary>
+        <div class="content">
+          На экзамене можно пользоваться маркером прямо в КИМах!<br>
+          <ul>
+            <li>Выделяй грамматические основы разными цветами</li>
+            <li>Подчеркивай части сложного предложения</li>
+            <li>Обводи союзы и союзные слова</li>
+            <li>Так проще не запутаться в задании 3 и 4</li>
           </ul>
         </div>
       </details>
@@ -418,20 +675,40 @@
 
     <div class="card">
       <details>
-        <summary>Сочинение (13.1–13.3)</summary>
+        <summary><span class="badge b-info">Совет</span> Орфографический словарь</summary>
         <div class="content">
-          Все три задания теперь одинаковы: нужны <strong>2 примера из текста</strong>.<br>
-          <strong>Лайфхак:</strong> Сначала читай текст и ищи примеры. Потом выбирай задание, под которое они лучше подходят.
+          На экзамене <strong>обязаны предоставить</strong> орфографический словарь!<br>
+          Пользуйся им сразу после изложения, не стесняйся.<br>
+          <em>Особенно для задания 7 (пропущенные буквы).</em>
         </div>
       </details>
     </div>
 
     <div class="card">
       <details>
-        <summary><span class="badge b-new">Важно</span> Оформление бланков</summary>
+        <summary><span class="badge b-trap">Внимание</span> Ошибки в источниках</summary>
         <div class="content">
-          Цифры пиши строго <strong>ПО ВОЗРАСТАНИЮ</strong> (147, а не 741).<br>
-          Компьютер примет любой порядок, но проверяют люди. Нестандартный порядок повышает риск ошибки эксперта.
+          В тренировочных тестах бывают <strong>ошибки в ключах</strong>!<br>
+          <ul>
+            <li>Неверно выделенная основа («водружали»)</li>
+            <li>Спорные моменты с «горячий» / «гор/гар»</li>
+            <li><strong>Доверяй правилам</strong>, а не слепым ответам</li>
+            <li>Проверяй по РешуЕГЭ и Грамота.ру</li>
+          </ul>
+        </div>
+      </details>
+    </div>
+
+    <div class="card">
+      <details>
+        <summary><span class="badge b-tip">На экзамене</span> Не торопись!</summary>
+        <div class="content">
+          <ul>
+            <li>Времени ВАГОН — 3 часа 55 минут</li>
+            <li>Сначала доказываешь себе правило, потом выбираешь цифру</li>
+            <li>Не переходи к следующему, пока не уверен в текущем</li>
+            <li>Пиши только то, в чём уверен (особенно в сочинении)</li>
+          </ul>
         </div>
       </details>
     </div>
@@ -452,23 +729,25 @@
   <div class="nav-item" onclick="switchTab('sec-lex', this)">
     <span>📚</span> Лексика
   </div>
+  <div class="nav-item" onclick="switchTab('sec-phrase', this)">
+    <span>🔗</span> Связь
+  </div>
   <div class="nav-item" onclick="switchTab('sec-writing', this)">
     <span>✍️</span> Текст
+  </div>
+  <div class="nav-item" onclick="switchTab('sec-hacks', this)">
+    <span>💡</span> Хитрости
   </div>
 </nav>
 
 <script>
   function switchTab(sectionId, navElement) {
-    // Hide all sections
     document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
-    // Show target section
     document.getElementById(sectionId).classList.add('active');
     
-    // Update nav state
     document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
     navElement.classList.add('active');
     
-    // Scroll to top
     window.scrollTo(0, 0);
   }
 
@@ -476,7 +755,6 @@
     document.body.classList.toggle('light');
   }
 
-  // Prevent double-tap zoom on buttons
   document.addEventListener('dblclick', function(event) {
     event.preventDefault();
   }, { passive: false });
