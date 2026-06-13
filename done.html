@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alterna — Отчёт о реализации</title>
+<meta name="description" content="Полный отчёт о текущем состоянии интерактивного учебника Alterna: 8 глав, 28 страниц, интерактивы, SEO, деплой.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#060E1C;--bg2:#0A1628;--panel:#0E1D33;--panel2:#13243F;
+  --ink:#E5EEF8;--muted:#8FA6C0;--line:#1E3354;
+  --cyan:#22D3EE;--amber:#FCD34D;--red:#F87171;--green:#34D399;--violet:#A78BFA;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:"Manrope","Inter",system-ui,sans-serif;line-height:1.65;padding:0}
+.mono{font-family:"JetBrains Mono",monospace}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+
+header{background:linear-gradient(180deg,var(--bg2),var(--bg));padding:48px 0 32px;text-align:center;border-bottom:1px solid var(--line)}
+header .tag{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--cyan);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+header h1{font-size:clamp(24px,4vw,36px);font-weight:800;margin-bottom:8px}
+header p{color:var(--muted);max-width:700px;margin:0 auto;font-size:15px}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin:32px 0}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}
+.stat .num{font-family:"JetBrains Mono",monospace;font-size:32px;font-weight:800;color:var(--cyan);line-height:1}
+.stat .lbl{font-size:12px;color:var(--muted);margin-top:6px;text-transform:uppercase;letter-spacing:.04em}
+.stat.amber .num{color:var(--amber)}
+.stat.green .num{color:var(--green)}
+.stat.violet .num{color:var(--violet)}
+.stat.red .num{color:var(--red)}
+
+section{margin:40px 0}
+h2{font-size:22px;font-weight:800;margin-bottom:6px;display:flex;align-items:center;gap:10px}
+h2 .badge{font-family:"JetBrains Mono",monospace;font-size:11px;background:rgba(34,211,238,.12);color:var(--cyan);padding:3px 10px;border-radius:999px;font-weight:600}
+h3{font-size:17px;font-weight:700;color:var(--cyan);margin:24px 0 8px;padding-left:12px;border-left:3px solid var(--cyan)}
+h4{font-size:14px;font-weight:700;color:var(--amber);margin:16px 0 6px}
+.sub{color:var(--muted);font-size:14px;margin-bottom:16px}
+
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th{background:var(--panel2);color:var(--cyan);font-family:"JetBrains Mono",monospace;font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:10px 12px;text-align:left;border-bottom:2px solid var(--line)}
+td{padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:hover td{background:rgba(34,211,238,.03)}
+.tbl-wrap{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;overflow-x:auto}
+
+.pill{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:11px;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pill.ok{background:rgba(52,211,153,.12);color:var(--green);border:1px solid rgba(52,211,153,.25)}
+.pill.warn{background:rgba(252,211,77,.12);color:var(--amber);border:1px solid rgba(252,211,77,.25)}
+.pill.todo{background:rgba(248,113,113,.12);color:var(--red);border:1px solid rgba(248,113,113,.25)}
+.pill.info{background:rgba(34,211,238,.12);color:var(--cyan);border:1px solid rgba(34,211,238,.25)}
+.pill.v{background:rgba(167,139,250,.12);color:var(--violet);border:1px solid rgba(167,139,250,.25)}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin:12px 0}
+.card.left-cyan{border-left:4px solid var(--cyan)}
+.card.left-amber{border-left:4px solid var(--amber)}
+.card.left-green{border-left:4px solid var(--green)}
+.card.left-violet{border-left:4px solid var(--violet)}
+.card.left-red{border-left:4px solid var(--red)}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+
+.chapter-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;position:relative;overflow:hidden}
+.chapter-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.chapter-card.ch1::before{background:var(--cyan)}
+.chapter-card.ch2::before{background:var(--amber)}
+.chapter-card.ch3::before{background:var(--green)}
+.chapter-card.ch4::before{background:var(--violet)}
+.chapter-card.ch5::before{background:var(--red)}
+.chapter-card.ch6::before{background:var(--cyan)}
+.chapter-card.ch7::before{background:var(--amber)}
+.chapter-card.ch8::before{background:var(--green)}
+.chapter-card .ch-num{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.chapter-card h4{margin:4px 0 2px;color:var(--ink);font-size:16px}
+.chapter-card .ch-url{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--cyan);margin-bottom:8px}
+.chapter-card .ch-meta{font-size:12px;color:var(--muted)}
+.chapter-card .ch-meta span{margin-right:12px}
+
+.progress-bar{height:8px;background:var(--panel2);border-radius:4px;overflow:hidden;margin:6px 0}
+.progress-bar .fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--cyan),var(--green))}
+
+code{font-family:"JetBrains Mono",monospace;font-size:12px;background:var(--panel2);color:var(--amber);padding:1px 6px;border-radius:4px}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+
+.nav-chain{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px;margin:16px 0;font-family:"JetBrains Mono",monospace;font-size:12px;line-height:2.2;color:var(--muted);overflow-x:auto;white-space:pre}
+.nav-chain .arr{color:var(--cyan)}
+.nav-chain .cur{color:var(--ink);font-weight:700}
+
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:16px 0}
+.phase-card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.phase-card.done{border-color:var(--green)}
+.phase-card.wip{border-color:var(--amber)}
+.phase-card.todo{border-color:var(--line)}
+.phase-card .ph-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.phase-card .ph-title{font-weight:700;font-size:14px}
+
+footer{border-top:1px solid var(--line);padding:24px 0;margin-top:48px;text-align:center;color:var(--muted);font-size:12px}
+
+@media(max-width:760px){
+  .grid2,.grid3{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="tag">Alterna · Отчёт о реализации</div>
+    <h1>Интерактивный учебник информатики</h1>
+    <p>Полный отчёт о текущем состоянии проекта: готовые главы, интерактивы, SEO, деплой, дорожная карта. Обновлено: июнь 2026.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+<!-- ═══════════ КЛЮЧЕВЫЕ ЦИФРЫ ═══════════ -->
+<section>
+  <h2>Ключевые цифры</h2>
+  <div class="stats">
+    <div class="stat"><div class="num">8</div><div class="lbl">Глав</div></div>
+    <div class="stat"><div class="num">28</div><div class="lbl">Страниц</div></div>
+    <div class="stat green"><div class="num">70+</div><div class="lbl">Интерактивов</div></div>
+    <div class="stat amber"><div class="num">46</div><div class="lbl">HTML-файлов</div></div>
+    <div class="stat violet"><div class="num">13</div><div class="lbl">JSON-данных</div></div>
+    <div class="stat"><div class="num">31</div><div class="lbl">SEO-страниц</div></div>
+    <div class="stat green"><div class="num">33</div><div class="lbl">URL в sitemap</div></div>
+    <div class="stat red"><div class="num">~42</div><div class="lbl">Модулей осталось</div></div>
+  </div>
+</section>
+
+<!-- ═══════════ СТРУКТУРА ПРОЕКТА ═══════════ -->
+<section>
+  <h2>Структура проекта</h2>
+  <p class="sub">Сайт: <code>https://alterna-edu.ru</code> · Рабочий диск: <code>Z:\YandexDisk\Obsidian\Alterna\</code></p>
+
+  <div class="card left-cyan">
+    <h4>Технологии</h4>
+    <p>Чистый <strong>HTML/CSS/JS + SVG + JSON</strong>, без фреймворков и сборщиков. Шрифты: Manrope + JetBrains Mono (Google Fonts). Дизайн-система: <strong>Metagross</strong> (тёмная киберпанк-эстетика, неон cyan/amber/red/green).</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card left-amber">
+      <h4>Деплой</h4>
+      <p><strong>nginx:alpine</strong> в Docker. Каждая папка-глава — volume <code>ro</code>. SSL Let's Encrypt. <code>try_files $uri $uri/ =404</code> для auto-index.</p>
+      <p style="margin-top:8px"><code>docker compose down && up -d</code> при добавлении volume.</p>
+    </div>
+    <div class="card left-green">
+      <h4>SEO и аналитика</h4>
+      <p>Title ≤60, description ≤160, OG, Twitter Card, JSON-LD <code>LearningResource</code>, canonical, robots. <code>sitemap.xml</code> (33 URL), <code>robots.txt</code>. Яндекс.Метрика ID <strong>109827986</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ГОТОВЫЕ ГЛАВЫ ═══════════ -->
+<section>
+  <h2>Готовые главы <span class="badge">8 / ~50</span></h2>
+  <p class="sub">Все 8 глав опубликованы на alterna-edu.ru. Навигация: <code>/map/</code> → оглавление с кликабельными ссылками.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Гл.</th><th>URL</th><th>Название</th><th>Стр.</th><th>Класс</th><th>Экзамен</th><th>Интерактивов</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong></td>
+          <td><code>/history/</code></td>
+          <td>История вычислительной техники</td>
+          <td>1</td>
+          <td>7</td>
+          <td><span class="pill info">—</span></td>
+          <td>13 виджетов + тренажёр</td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td><code>/pc/</code></td>
+          <td>Компьютер: архитектура, устройства</td>
+          <td>2</td>
+          <td>7</td>
+          <td><span class="pill info">—</span></td>
+          <td>SVG-плата + сборщик ПК (17 заданий)</td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td><code>/OS/</code></td>
+          <td>Операционные системы</td>
+          <td>5</td>
+          <td>7</td>
+          <td><span class="pill ok">ОГЭ 7,11,12</span> <span class="pill warn">ЕГЭ 10,13</span></td>
+          <td>22</td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td><code>/Web/</code></td>
+          <td>Сети Интернет; веб; поиск; безопасность</td>
+          <td>5</td>
+          <td>7</td>
+          <td><span class="pill info">мост → ОГЭ 7,8; ЕГЭ 13</span></td>
+          <td>17</td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td><code>/IP/</code></td>
+          <td>IP-адреса; маски подсетей; хранение</td>
+          <td>5</td>
+          <td>9</td>
+          <td><span class="pill ok">ОГЭ 7,8</span> <span class="pill warn">ЕГЭ 13</span></td>
+          <td>11</td>
+        </tr>
+        <tr>
+          <td><strong>6</strong></td>
+          <td><code>/Net/</code></td>
+          <td>Протоколы; DNS; веб-сайты</td>
+          <td>4</td>
+          <td>11</td>
+          <td><span class="pill warn">ЕГЭ 13</span></td>
+          <td>9</td>
+        </tr>
+        <tr>
+          <td><strong>7</strong></td>
+          <td><code>/Parallel/</code></td>
+          <td>Параллельные вычисления; суперкомпьютеры</td>
+          <td>3</td>
+          <td>10</td>
+          <td><span class="pill warn">ЕГЭ 22</span></td>
+          <td>8</td>
+        </tr>
+        <tr>
+          <td><strong>8</strong></td>
+          <td><code>/Dev/</code></td>
+          <td>Веб-разработка (HTML/CSS/JS)</td>
+          <td>4</td>
+          <td>7–11</td>
+          <td><span class="pill info">—</span></td>
+          <td>11</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Навигационная цепочка</h3>
+  <div class="nav-chain"><span class="cur">/map/</span> <span class="arr">→</span> <span class="cur">/history/</span> <span class="arr">→</span> <span class="cur">/pc/</span> <span class="arr">→</span> <span class="cur">/OS/</span> <span class="arr">→</span> fs <span class="arr">→</span> soft <span class="arr">→</span> access <span class="arr">→</span> exam
+<span class="arr">→</span> <span class="cur">/Web/</span> <span class="arr">→</span> web <span class="arr">→</span> search <span class="arr">→</span> safety <span class="arr">→</span> exam
+<span class="arr">→</span> <span class="cur">/IP/</span> <span class="arr">→</span> subnets <span class="arr">→</span> storage <span class="arr">→</span> security <span class="arr">→</span> exam
+<span class="arr">→</span> <span class="cur">/Net/</span> <span class="arr">→</span> dns <span class="arr">→</span> web <span class="arr">→</span> exam
+<span class="arr">→</span> <span class="cur">/Parallel/</span> <span class="arr">→</span> super <span class="arr">→</span> exam
+<span class="arr">→</span> <span class="cur">/Dev/</span> <span class="arr">→</span> css <span class="arr">→</span> js <span class="arr">→</span> builder <span class="arr">→</span> <span class="cur">/map/</span></div>
+</section>
+
+<!-- ═══════════ ДЕТАЛИ ПО ГЛАВАМ ═══════════ -->
+<section>
+  <h2>Детали по главам</h2>
+
+  <!-- Глава 1 -->
+  <div class="chapter-card ch1">
+    <div class="ch-num">Глава 1 · N_07_DG_00</div>
+    <h4>История вычислительной техники</h4>
+    <div class="ch-url">/history/</div>
+    <div class="ch-meta">
+      <span>1 страница</span>
+      <span>9 фаз · 36 узлов · 48 связей</span>
+      <span>35 персоналий</span>
+      <span>13 виджетов</span>
+    </div>
+    <p style="margin-top:10px;font-size:13px">Интерактивное древо эволюции ЭВМ от абака до квантовых компьютеров. SVG-связи 4 типов (эволюция/параллельная/влияние/корпоративная). Модальные карточки с галереей, теорией, «вопросом на засыпку», «что если бы…», iframe-виджетами, wiki-ссылками. Раздел «Поколения ЭВМ», блок «Люди» с Гантт-лентой, тренажёр на 15 сценариев (228 XP).</p>
+    <p style="margin-top:6px;font-size:12px;color:var(--muted)">Данные: <code>tree-data.json</code>, <code>media.json</code>, <code>people.json</code>, <code>trainer-data.json</code>. Виджеты: abacus, sliderule, pascaline, jacquard, babbage, vonneumann, transistor, arduino, neuron, quantum, supercomputer, internet, trainer.</p>
+  </div>
+
+  <!-- Глава 2 -->
+  <div class="chapter-card ch2">
+    <div class="ch-num">Глава 2 · N_07_DG_01</div>
+    <h4>Компьютер: архитектура, устройства, ПО</h4>
+    <div class="ch-url">/pc/</div>
+    <div class="ch-meta">
+      <span>2 страницы</span>
+      <span>8 категорий · 94 карточки</span>
+      <span>164 фото</span>
+    </div>
+    <p style="margin-top:10px;font-size:13px">Интерактивная SVG-схема материнской платы (8 кликабельных зон). Галерея реальных комплектующих с характеристиками (CPU/RAM/GPU/SSD/чипсет/БП/порты/расширение). Тренажёр «Сборщик ПК»: свободный режим + 17 сценариев клиентов с проверкой совместимости (сокет, DDR, мощность БП, bottleneck).</p>
+    <p style="margin-top:6px;font-size:12px;color:var(--muted)">Данные: <code>components.json</code> (3156 строк). Страницы: <code>index.html</code> (721 стр.), <code>pc-builder.html</code> (657 стр.).</p>
+  </div>
+
+  <!-- Глава 3 -->
+  <div class="chapter-card ch3">
+    <div class="ch-num">Глава 3 · N_07_DG_02</div>
+    <h4>Операционные системы</h4>
+    <div class="ch-url">/OS/ → fs/ → soft/ → access/ → exam/</div>
+    <div class="ch-meta">
+      <span>5 страниц</span>
+      <span>22 интерактива</span>
+      <span>ОГЭ 7,11,12 · ЕГЭ 10,13</span>
+    </div>
+    <p style="margin-top:10px;font-size:13px"><strong>3.1</strong> ОС-дирижёр: жизнь процесса (SVG), собери ОС (drag-and-drop), карусель ПО (58 логотипов). <strong>3.2</strong> Файловая система: терминал (pwd/ls/cd/mkdir/touch/mv/rm/tree), собери путь, маски (*,?), калькулятор объёма, RLE-архиватор, поиск в тексте (Ctrl+F), URL-сборщик, 7 заданий ОГЭ. <strong>3.3</strong> ПО: пирамида, сортировки, 3 класса ПО, 4 лицензии, импортозамещение. <strong>3.4</strong> Права: матрица R/W/X, NTFS vs chmod, шифр Цезаря, 152-ФЗ, кейсы безопасности. <strong>3.5</strong> Экзамен: карта тем, квест (9 сценариев XP), тест (16 заданий КИМ), кейс «Недоступен сетевой путь».</p>
+    <p style="margin-top:6px;font-size:12px;color:var(--muted)">Shared: <code>os.css</code> (462 стр.), <code>os-common.js</code> (109 стр.). Изображения: 58 логотипов ОС/ПО.</p>
+  </div>
+
+  <!-- Глава 4 -->
+  <div class="chapter-card ch4">
+    <div class="ch-num">Глава 4 · N_07_DG_03</div>
+    <h4>Сети Интернет; веб; браузер; поиск; безопасность; этикет</h4>
+    <div class="ch-url">/Web/ → web/ → search/ → safety/ → exam/</div>
+    <div class="ch-meta">
+      <span>5 страниц</span>
+      <span>17 интерактивов</span>
+      <span>school_only (мост к ОГЭ/ЕГЭ)</span>
+    </div>
+    <p style="margin-top:10px;font-size:13px"><strong>4.1</strong> Сети: топологии (SVG + реальные примеры), оборудование (drag-and-drop), SVG-карта мира с анимированными кабелями, IP-исследователь. <strong>4.2</strong> Пакеты: DNS-симулятор, путь пакета, рентген пакета (4 слоя), загрузка страницы (timeline 9 шагов), калькулятор скорости (t=V/q). <strong>4.3</strong> Поиск: 50 задач из JSON (5 случайных), фактчекинг (36 статей, 8 случайных). <strong>4.4</strong> Безопасность: тестер паролей, сценарии, детектор фишинга (6 красных флагов). <strong>4.5</strong> Экзамен: квест, тест (10 из 50), кейс.</p>
+    <p style="margin-top:6px;font-size:12px;color:var(--muted)">JSON: <code>topo-equip-data.json</code>, <code>search-data.json</code> (935 стр.), <code>exam-data.json</code>. Shared: <code>web.css</code> (462 стр.), <code>web-common.js</code> (60 стр.).</p>
+  </div>
+
+  <!-- Глава 5 -->
+  <div class="chapter-card ch5">
+    <div class="ch-num">Глава 5 · N_09_DG_01</div>
+    <h4>IP-адреса; маски подсетей; сетевое хранение; безопасность</h4>
+    <div class="ch-url">/IP/ → subnets/ → storage/ → security/ → exam/</div>
+    <div class="ch-meta">
+      <span>5 страниц</span>
+      <span>11 интерактивов</span>
+      <span>ОГЭ 7,8 · ЕГЭ 13</span>
+    </div>
+    <p style="margin-top:10px;font-size:13px"><strong>5.1</strong> IP-адреса: IPv4/IPv6, классы A-E, NAT, IP-эксплорер, двоичное AND. <strong>5.2</strong> Маски: CIDR, калькулятор подсетей, практика (5 задач), калькулятор скорости (20 задач). <strong>5.3</strong> Хранение: DAS/NAS/SAN, RAID 0/1/5/6/10, облако, RAID-симулятор. <strong>5.4</strong> Безопасность: CIA, firewall (симулятор 7 правил × 10 пакетов), IDS/IPS, VPN, TLS/PKI, шифрование/хеширование. <strong>5.5</strong> Экзамен: квест, тест с таймером 20 мин (15 из 95), разбор ошибок, кейс «Подозрительный трафик».</p>
+    <p style="margin-top:6px;font-size:12px;color:var(--muted)">JSON: <code>exam-data.json</code> (25 oge7 + 25 oge8 + 25 ege13 + 20 speed). Shared: <code>ip.css</code> (285 стр.), <code>ip-common.js</code> (55 стр.).</p>
+  </div>
+
+  <!-- Глава 6 -->
+  <div class="chapter-card ch6">
+    <div class="ch-num">Глава 6 · N_11_DG_01</div>
+    <h4>Протоколы; DNS; веб-сайты</h4>
+    <div class="ch-url">/Net/ → dns/ → web/ → exam/</div>
+    <div class="ch-meta">
+      <span>4 страницы</span>
+      <span>9 интерактивов</span>
+      <span>ЕГЭ 13</span>
+    </div>
+    <p style="margin-top:10px;font-size:13px"><strong>6.1</strong> Протоколы: TCP/IP модель, TCP vs UDP, HTTP/FTP/SMTP/SSH, порты, OSI. TCP Handshake (анимация), матрёшка инкапсуляции (4 слоя), собери HTTP-запрос (drag-and-drop). <strong>6.2</strong> DNS: иерархия, записи (A/AAAA/CNAME/MX/NS/TXT/PTR/SOA), разрешение, DNSSEC/DoH. DNS Explorer, DNS Resolution Simulator. <strong>6.3</strong> Веб: HTML/CSS/JS, frontend/backend, хостинг, рендеринг, SPA/REST/CDN. Live HTML Editor. <strong>6.4</strong> Экзамен: квест (8 сценариев), тест (15 из 75), кейс «www.company.ru не открывается».</p>
+    <p style="margin-top:6px;font-size:12px;color:var(--muted)">JSON: <code>exam-data.json</code> (603 стр.: 25 protocols + 25 dns + 25 web). Shared: <code>net.css</code> (~250 стр.), <code>net-common.js</code> (30 стр.).</p>
+  </div>
+
+  <!-- Глава 7 -->
+  <div class="chapter-card ch7">
+    <div class="ch-num">Глава 7</div>
+    <h4>Параллельные вычисления; суперкомпьютеры</h4>
+    <div class="ch-url">/Parallel/ → super/ → exam/</div>
+    <div class="ch-meta">
+      <span>3 страницы</span>
+      <span>8 интерактивов</span>
+      <span>ЕГЭ 22</span>
+    </div>
+    <p style="margin-top:10px;font-size:13px"><strong>7.1</strong> Параллелизм: закон Амдала (калькулятор с графиком), классификация Флинна (SISD/SIMD/MISD/MIMD), конвейер (SVG + формула k+n-1), многопоточность (race condition, deadlock). Планировщик ОС (диаграмма Ганта, drag-and-drop), симулятор deadlock. <strong>7.2</strong> Суперкомпьютеры: FLOPS, кластеры, GPU vs CPU, TOP500 (Frontier/Aurora/Fugaku), OpenMP/MPI, закон Густафсона. <strong>7.3</strong> Экзамен: квест, тест (10 из 25), кейс «Оптимизация программы».</p>
+    <p style="margin-top:6px;font-size:12px;color:var(--muted)">JSON: <code>exam-data.json</code> (25 ege22). Shared: <code>parallel.css</code> (~300 стр.), <code>parallel-common.js</code>.</p>
+  </div>
+
+  <!-- Глава 8 -->
+  <div class="chapter-card ch8">
+    <div class="ch-num">Глава 8</div>
+    <h4>Веб-разработка (HTML, CSS, JavaScript)</h4>
+    <div class="ch-url">/Dev/ → css/ → js/ → builder/</div>
+    <div class="ch-meta">
+      <span>4 страницы</span>
+      <span>11 интерактивов</span>
+      <span>school_only (практика)</span>
+    </div>
+    <p style="margin-top:10px;font-size:13px"><strong>8.1</strong> HTML: справочник 50+ тегов (фильтрация, поиск), живой редактор (textarea + iframe). <strong>8.2</strong> CSS: Flexbox-конструктор (5 dropdown, live preview), таблица 140 цветов, калькулятор специфичности, CSS-песочница (desktop/tablet/mobile). <strong>8.3</strong> JS: DOM Explorer, JS-консоль, DOM+CSS практика, fetch→протоколы (мост к гл.5-6). <strong>8.4</strong> Конструктор: 20 блоков в 6 категориях, режим «из блоков» (5 кейсов) + «с нуля» (5 кейсов).</p>
+    <p style="margin-top:6px;font-size:12px;color:var(--muted)">JSON: <code>blocks-data.json</code> (20 блоков + 10 кейсов). Shared: <code>dev.css</code> (~380 стр.), <code>dev-common.js</code>.</p>
+  </div>
+</section>
+
+<!-- ═══════════ ИНТЕРАКТИВЫ ═══════════ -->
+<section>
+  <h2>Интерактивы <span class="badge">70+</span></h2>
+  <p class="sub">Все интерактивы inline (JS в <code>&lt;script&gt;</code>), без внешних зависимостей. Данные — из JSON через <code>fetch()</code>.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Тип</th><th>Примеры</th><th>Главы</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Drag-and-drop</strong></td><td>Собери ОС, URL-сборщик, оборудование, HTTP-запрос, блоки конструктора</td><td>3, 4, 5, 6, 8</td></tr>
+        <tr><td><strong>Симуляторы</strong></td><td>DNS-резолвинг, firewall, RAID, deadlock, TCP handshake, пакет</td><td>4, 5, 6, 7</td></tr>
+        <tr><td><strong>Калькуляторы</strong></td><td>IP-эксплорер, подсети, скорость передачи, Амдала, специфичность CSS</td><td>4, 5, 7, 8</td></tr>
+        <tr><td><strong>Живые редакторы</strong></td><td>HTML/CSS/JS (iframe preview), терминал, CSS-песочница</td><td>3, 8</td></tr>
+        <tr><td><strong>Тренажёры</strong></td><td>Маски, RLE, поиск в тексте, сборщик ПК (17 сценариев)</td><td>2, 3</td></tr>
+        <tr><td><strong>Тесты/квесты</strong></td><td>Экзамен-полигон (квест XP + тест КИМ + кейс) — в каждой главе 3–8</td><td>3–8</td></tr>
+        <tr><td><strong>SVG-визуализации</strong></td><td>Древо эволюции, материнская плата, топологии, карта мира, конвейер</td><td>1, 2, 4, 7</td></tr>
+        <tr><td><strong>Анимации</strong></td><td>Загрузка страницы (timeline), путь пакета, карусель логотипов</td><td>3, 4</td></tr>
+        <tr><td><strong>Виджеты (iframe)</strong></td><td>13 self-contained HTML: abacus, pascaline, transistor, quantum…</td><td>1</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ JSON-ДАННЫЕ ═══════════ -->
+<section>
+  <h2>Банки данных (JSON)</h2>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Файл</th><th>Глава</th><th>Содержание</th><th>Объём</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>tree-data.json</code></td><td>1</td><td>9 фаз, 36 узлов, 48 связей, теория, wiki</td><td>~3000 стр.</td></tr>
+        <tr><td><code>people.json</code></td><td>1</td><td>35 персоналий (даты, вклад, wiki, факты)</td><td>~800 стр.</td></tr>
+        <tr><td><code>media.json</code></td><td>1</td><td>Манифест медиа по узлам</td><td>~200 стр.</td></tr>
+        <tr><td><code>trainer-data.json</code></td><td>1</td><td>15 сценариев тренажёра (228 XP)</td><td>~400 стр.</td></tr>
+        <tr><td><code>components.json</code></td><td>2</td><td>8 категорий, 94 карточки комплектующих</td><td>3156 стр.</td></tr>
+        <tr><td><code>topo-equip-data.json</code></td><td>4</td><td>Топологии с примерами + 8 единиц оборудования</td><td>~200 стр.</td></tr>
+        <tr><td><code>search-data.json</code></td><td>4</td><td>50 поисковых задач + 36 статей фактчекинга</td><td>935 стр.</td></tr>
+        <tr><td><code>exam-data.json</code></td><td>4</td><td>25 ОГЭ + 25 ЕГЭ вопросов</td><td>~400 стр.</td></tr>
+        <tr><td><code>exam-data.json</code></td><td>5</td><td>25 oge7 + 25 oge8 + 25 ege13 + 20 speed</td><td>~800 стр.</td></tr>
+        <tr><td><code>exam-data.json</code></td><td>6</td><td>25 protocols + 25 dns + 25 web</td><td>603 стр.</td></tr>
+        <tr><td><code>exam-data.json</code></td><td>7</td><td>25 вопросов ЕГЭ 22</td><td>~300 стр.</td></tr>
+        <tr><td><code>blocks-data.json</code></td><td>8</td><td>20 блоков + 5+5 кейсов</td><td>~500 стр.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ ЭКЗАМЕНАЦИОННОЕ ПОКРЫТИЕ ═══════════ -->
+<section>
+  <h2>Экзаменационное покрытие</h2>
+
+  <div class="grid2">
+    <div class="card left-green">
+      <h4>ОГЭ-2026</h4>
+      <table style="font-size:12px">
+        <tr><td><strong>№ 1</strong> — Информационный объём</td><td><span class="pill ok">Гл. 3</span></td></tr>
+        <tr><td><strong>№ 5</strong> — Анализ алгоритмов</td><td><span class="pill ok">Гл. 3</span></td></tr>
+        <tr><td><strong>№ 7</strong> — URL, IP-адреса</td><td><span class="pill ok">Гл. 3, 4, 5</span></td></tr>
+        <tr><td><strong>№ 8</strong> — Поисковые запросы</td><td><span class="pill ok">Гл. 4, 5</span></td></tr>
+        <tr><td><strong>№ 10</strong> — Поиск в тексте</td><td><span class="pill ok">Гл. 3</span></td></tr>
+        <tr><td><strong>№ 11</strong> — Файловые пути</td><td><span class="pill ok">Гл. 3</span></td></tr>
+        <tr><td><strong>№ 12</strong> — Маски файлов</td><td><span class="pill ok">Гл. 3</span></td></tr>
+      </table>
+    </div>
+    <div class="card left-amber">
+      <h4>ЕГЭ-2026</h4>
+      <table style="font-size:12px">
+        <tr><td><strong>№ 8, 11</strong> — Объём, скорость передачи</td><td><span class="pill ok">Гл. 3, 5</span></td></tr>
+        <tr><td><strong>№ 10</strong> — Поиск/замена в тексте</td><td><span class="pill ok">Гл. 3</span></td></tr>
+        <tr><td><strong>№ 13</strong> — IP, маски, DNS, протоколы</td><td><span class="pill ok">Гл. 3, 4, 5, 6</span></td></tr>
+        <tr><td><strong>№ 22</strong> — Параллельные вычисления</td><td><span class="pill ok">Гл. 7</span></td></tr>
+        <tr><td><strong>№ 23, 26</strong> — Анализ алгоритмов</td><td><span class="pill info">косвенно Гл. 7</span></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="card left-violet" style="margin-top:14px">
+    <h4>Банк экзаменационных вопросов (JSON)</h4>
+    <p style="font-size:13px">Суммарно в банках: <strong>270+ вопросов</strong> (ОГЭ 7/8, ЕГЭ 13/22) + 20 задач на скорость. Каждый экзамен-полигон выбирает случайные 10–15 вопросов при каждом заходе.</p>
+  </div>
+</section>
+
+<!-- ═══════════ SEO И ИНФРАСТРУКТУРА ═══════════ -->
+<section>
+  <h2>SEO и инфраструктура</h2>
+
+  <div class="grid3">
+    <div class="card left-cyan">
+      <h4>SEO (31 страница)</h4>
+      <ul style="font-size:13px;padding-left:18px;margin-top:6px">
+        <li>Title ≤ 60 символов</li>
+        <li>Description ≤ 160 символов</li>
+        <li>Keywords, robots meta</li>
+        <li>Open Graph (og:*)</li>
+        <li>Twitter Card</li>
+        <li>JSON-LD <code>LearningResource</code></li>
+        <li>Canonical URL</li>
+      </ul>
+    </div>
+    <div class="card left-green">
+      <h4>Индексация</h4>
+      <ul style="font-size:13px;padding-left:18px;margin-top:6px">
+        <li><code>sitemap.xml</code> — 33 URL</li>
+        <li><code>robots.txt</code> — правила для ботов</li>
+        <li>Google Search Console — верифицирован</li>
+        <li>Яндекс.Вебмастер — верифицирован</li>
+        <li>Яндекс.Метрика ID 109827986</li>
+      </ul>
+    </div>
+    <div class="card left-amber">
+      <h4>Мобильная адаптация</h4>
+      <ul style="font-size:13px;padding-left:18px;margin-top:6px">
+        <li>Breakpoint 880px (сетки → 1 колонка)</li>
+        <li>Breakpoint 560px (кнопки 44px, iOS-safe inputs)</li>
+        <li>Touch-to-select для drag-and-drop</li>
+        <li><code>prefers-reduced-motion</code></li>
+        <li>Viewport meta на всех страницах</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Docker Compose — volumes</h3>
+  <div class="card" style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2">
+    ./index.html, ./map, ./history, ./pc, ./OS, ./Web, ./IP, ./Net, ./Parallel, ./Dev<br>
+    ./sitemap.xml, ./robots.txt, ./nginx.conf, /etc/letsencrypt
+  </div>
+</section>
+
+<!-- ═══════════ ДОКУМЕНТАЦИЯ ═══════════ -->
+<section>
+  <h2>Документация</h2>
+  <p class="sub">Папка: <code>Документация\Информатика\</code></p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Файл</th><th>Содержание</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>1.History.md</code></td><td>Модуль N_07_DG_00 «История ВТ» — 11 разделов, 253 строки</td></tr>
+        <tr><td><code>2.PC.md</code></td><td>Модуль N_07_DG_01 «Компьютер» — 11 разделов, 287 строк</td></tr>
+        <tr><td><code>3.ОС.md</code></td><td>Глава 3 N_07_DG_02 «Операционные системы» — 12 разделов, 302 строки</td></tr>
+        <tr><td><code>4.Web.md</code></td><td>Глава 4 N_07_DG_03 «Сети Интернет» — 11 разделов</td></tr>
+        <tr><td><code>5.IP.md</code></td><td>Глава 5 N_09_DG_01 «IP-адресация» — 11 разделов</td></tr>
+        <tr><td><code>6.Net.md</code></td><td>Глава 6 N_11_DG_01 «Протоколы, DNS» — 11 разделов</td></tr>
+        <tr><td><code>7.Parallel.md</code></td><td>Глава 7 «Параллельные вычисления» — 11 разделов</td></tr>
+        <tr><td><code>8.Dev.md</code></td><td>Глава 8 «Веб-разработка» — 11 разделов</td></tr>
+        <tr><td><code>Дизайн.md</code></td><td>Дизайн-система Metagross, скелеты, виджеты, деплой — 293 строки</td></tr>
+        <tr><td><code>Контекст.md</code></td><td>Общая память проекта: пути, решения, состояние глав</td></tr>
+        <tr><td><code>Дорожная карта v2.md</code></td><td>План развития: фазы 0–6, обучающие ветки, статус</td></tr>
+        <tr><td><code>ФГОСы/</code></td><td>ФРП 7-9/10-11 (база+угл.), knowledge_map.json, OGE/EGE спецификации, кодификаторы</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ ДОРОЖНАЯ КАРТА ═══════════ -->
+<section>
+  <h2>Дорожная карта — статус фаз</h2>
+
+  <div class="phase-grid">
+    <div class="phase-card done">
+      <div class="ph-head">
+        <div class="ph-title">Фаза 0 — Фундамент</div>
+        <span class="pill ok">Завершена</span>
+      </div>
+      <p style="font-size:12px">Схема контент-узла, дизайн-система, knowledge_map.json (47+3 узла), 8 глав созданы.</p>
+      <div class="progress-bar"><div class="fill" style="width:100%"></div></div>
+    </div>
+    <div class="phase-card done">
+      <div class="ph-head">
+        <div class="ph-title">Фаза 1 — Карта на сайте</div>
+        <span class="pill ok">Завершена</span>
+      </div>
+      <p style="font-size:12px">map/index.html: 48 тем, фильтры, поиск, сортировка, кликабельные ссылки, подстраницы.</p>
+      <div class="progress-bar"><div class="fill" style="width:100%"></div></div>
+    </div>
+    <div class="phase-card wip">
+      <div class="ph-head">
+        <div class="ph-title">Фаза 2 — Наполнение контентом</div>
+        <span class="pill warn">В процессе</span>
+      </div>
+      <p style="font-size:12px">8 из ~50 модулей готовы. Следующие: прикладное ПО (Ветка 2Б), системы счисления (2А), алгоритмы (3).</p>
+      <div class="progress-bar"><div class="fill" style="width:16%"></div></div>
+    </div>
+    <div class="phase-card wip">
+      <div class="ph-head">
+        <div class="ph-title">Фаза 3 — Интерактив и тренажёры</div>
+        <span class="pill warn">Частично</span>
+      </div>
+      <p style="font-size:12px">70+ интерактивов в 8 главах. Осталось: Pyodide-тренажёры для Python.</p>
+      <div class="progress-bar"><div class="fill" style="width:60%"></div></div>
+    </div>
+    <div class="phase-card wip">
+      <div class="ph-head">
+        <div class="ph-title">Фаза 4 — Игровой слой</div>
+        <span class="pill warn">Частично</span>
+      </div>
+      <p style="font-size:12px">XP в квестах, лента-прогресс (localStorage). Осталось: глобальный skill-tree, стрики, ачивки, уровни.</p>
+      <div class="progress-bar"><div class="fill" style="width:25%"></div></div>
+    </div>
+    <div class="phase-card todo">
+      <div class="ph-head">
+        <div class="ph-title">Фаза 5 — Backend</div>
+        <span class="pill todo">Не начата</span>
+      </div>
+      <p style="font-size:12px">FastAPI + PostgreSQL, синхронизация прогресса, кабинет репетитора, аккаунты.</p>
+      <div class="progress-bar"><div class="fill" style="width:0%"></div></div>
+    </div>
+    <div class="phase-card wip">
+      <div class="ph-head">
+        <div class="ph-title">Фаза 6 — Полировка</div>
+        <span class="pill warn">Частично</span>
+      </div>
+      <p style="font-size:12px">SEO, sitemap, Метрика, мобильная адаптация — готовы. Осталось: лид-магнит, контент-ревью.</p>
+      <div class="progress-bar"><div class="fill" style="width:70%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ СЛЕДУЮЩИЕ ШАГИ ═══════════ -->
+<section>
+  <h2>Следующие шаги</h2>
+
+  <div class="grid2">
+    <div class="card left-cyan">
+      <h4>Ветка 2Б — Прикладное ПО</h4>
+      <ul style="font-size:13px;padding-left:18px;margin-top:6px">
+        <li><code>N_07_IT_01</code> — Текстовый процессор</li>
+        <li><code>N_07_IT_02</code> — Электронные таблицы</li>
+        <li><code>N_07_IT_03</code> — Презентации и графика</li>
+        <li><code>N_07_IT_04</code> — Базы данных</li>
+      </ul>
+    </div>
+    <div class="card left-amber">
+      <h4>Ветка 2А — Вглубь железа</h4>
+      <ul style="font-size:13px;padding-left:18px;margin-top:6px">
+        <li><code>N_08_TO_01</code> — Системы счисления</li>
+        <li><code>N_08_TO_02</code> — Логические элементы</li>
+        <li><code>N_07_TO_04</code> — Единицы измерения (расширить)</li>
+      </ul>
+    </div>
+    <div class="card left-green">
+      <h4>Ветка 3 — Алгоритмы</h4>
+      <ul style="font-size:13px;padding-left:18px;margin-top:6px">
+        <li>Исполнители (Чертёжник, Робот)</li>
+        <li>Python basics (Pyodide sandbox)</li>
+        <li>Ветвления, циклы, массивы</li>
+      </ul>
+    </div>
+    <div class="card left-violet">
+      <h4>Инфраструктура</h4>
+      <ul style="font-size:13px;padding-left:18px;margin-top:6px">
+        <li>Глобальный skill-tree (React Flow / Cytoscape)</li>
+        <li>XP/стрики/ачивки (localStorage → backend)</li>
+        <li>FastAPI + PostgreSQL</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ДИЗАЙН-СИСТЕМА ═══════════ -->
+<section>
+  <h2>Дизайн-система Metagross</h2>
+  <div class="card">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px">
+      <div style="width:60px;height:40px;background:#060E1C;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--muted)">bg</div>
+      <div style="width:60px;height:40px;background:#0A1628;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--muted)">bg2</div>
+      <div style="width:60px;height:40px;background:#0E1D33;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--muted)">panel</div>
+      <div style="width:60px;height:40px;background:#13243F;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--muted)">panel2</div>
+      <div style="width:60px;height:40px;background:#22D3EE;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'JetBrains Mono',monospace;color:#04222b;font-weight:700">cyan</div>
+      <div style="width:60px;height:40px;background:#FCD34D;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'JetBrains Mono',monospace;color:#422006;font-weight:700">amber</div>
+      <div style="width:60px;height:40px;background:#F87171;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'JetBrains Mono',monospace;color:#fff;font-weight:700">red</div>
+      <div style="width:60px;height:40px;background:#34D399;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'JetBrains Mono',monospace;color:#042f1e;font-weight:700">green</div>
+      <div style="width:60px;height:40px;background:#A78BFA;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:'JetBrains Mono',monospace;color:#1e1040;font-weight:700">violet</div>
+    </div>
+    <p style="font-size:13px"><strong>Шрифты:</strong> Manrope (body, 400/600/700/800) + JetBrains Mono (labels, code). <strong>Контейнер:</strong> <code>.wrap</code> max-width 1160px. <strong>Навигация:</strong> topnav → /map/, modnav (prev/next). <strong>Лента-прогресс:</strong> rail с localStorage. <strong>Интерактивы:</strong> <code>.iv</code> shell с <code>.iv-head</code> + <code>.iv-body</code>.</p>
+  </div>
+</section>
+
+<!-- ═══════════ ФГОС/ФОП ═══════════ -->
+<section>
+  <h2>Покрытие ФГОС / ФОП</h2>
+  <p class="sub">Из <code>knowledge_map.json</code>: 47 узлов курса + 3 секретных = ~50 модулей.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Раздел ФРП</th><th>Класс</th><th>Готово</th><th>Осталось</th><th>Прогресс</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Цифровая грамотность</td>
+          <td>7</td>
+          <td>История, ПК, ОС, Сети</td>
+          <td>Прикладное ПО (4 модуля)</td>
+          <td><div class="progress-bar" style="width:120px"><div class="fill" style="width:50%"></div></div></td>
+        </tr>
+        <tr>
+          <td>Цифровая грамотность</td>
+          <td>9</td>
+          <td>IP-адресация</td>
+          <td>HTML, Big Data, безопасность</td>
+          <td><div class="progress-bar" style="width:120px"><div class="fill" style="width:25%"></div></div></td>
+        </tr>
+        <tr>
+          <td>Цифровая грамотность</td>
+          <td>10–11</td>
+          <td>Протоколы, Параллельные</td>
+          <td>Моделирование, ИИ</td>
+          <td><div class="progress-bar" style="width:120px"><div class="fill" style="width:30%"></div></div></td>
+        </tr>
+        <tr>
+          <td>Теоретические основы</td>
+          <td>7–10</td>
+          <td>—</td>
+          <td>Системы счисления, логика, кодирование, измерение информации</td>
+          <td><div class="progress-bar" style="width:120px"><div class="fill" style="width:0%"></div></div></td>
+        </tr>
+        <tr>
+          <td>Алгоритмы и программирование</td>
+          <td>7–11</td>
+          <td>—</td>
+          <td>Исполнители, Python, сортировки, рекурсия, ДП</td>
+          <td><div class="progress-bar" style="width:120px"><div class="fill" style="width:0%"></div></div></td>
+        </tr>
+        <tr>
+          <td>Информационные технологии</td>
+          <td>7–11</td>
+          <td>Веб-разработка</td>
+          <td>Текстовый процессор, таблицы, БД, презентации</td>
+          <td><div class="progress-bar" style="width:120px"><div class="fill" style="width:15%"></div></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ ФАЙЛОВАЯ СТРУКТУРА ═══════════ -->
+<section>
+  <h2>Файловая структура сайта</h2>
+  <div class="card" style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.9;overflow-x:auto;white-space:pre;color:var(--muted)">
+<span style="color:var(--ink)">Сайт\</span>
+├── <span style="color:var(--cyan)">index.html</span>              главная (ссылка на /map/)
+├── <span style="color:var(--cyan)">sitemap.xml</span>             33 URL
+├── <span style="color:var(--cyan)">robots.txt</span>              правила для ботов
+├── docker-compose.yml
+├── nginx.conf
+├── <span style="color:var(--muted)">map\</span>index.html          оглавление (48 тем, DATA[])
+├── <span style="color:var(--cyan)">history\</span>                гл.1 — История ВТ
+│   ├── index.html            (965 стр.)
+│   ├── tree-data.json, media.json, people.json, trainer-data.json
+│   └── widgets\              13 HTML-виджетов
+├── <span style="color:var(--amber)">pc\</span>                     гл.2 — Компьютер
+│   ├── index.html            (721 стр.)
+│   ├── pc-builder.html       (657 стр.)
+│   ├── components.json       (3156 стр.)
+│   └── img\                  164 фото
+├── <span style="color:var(--green)">OS\</span>                     гл.3 — Операционные системы
+│   ├── index.html, fs\, soft\, access\, exam\   (5 страниц)
+│   ├── assets\  os.css, os-common.js
+│   └── img\                  58 логотипов
+├── <span style="color:var(--violet)">Web\</span>                    гл.4 — Сети Интернет
+│   ├── index.html, web\, search\, safety\, exam\ (5 страниц)
+│   └── assets\  web.css, web-common.js, 3 JSON
+├── <span style="color:var(--red)">IP\</span>                     гл.5 — IP-адресация
+│   ├── index.html, subnets\, storage\, security\, exam\ (5 страниц)
+│   └── assets\  ip.css, ip-common.js, exam-data.json
+├── <span style="color:var(--cyan)">Net\</span>                    гл.6 — Протоколы, DNS
+│   ├── index.html, dns\, web\, exam\  (4 страницы)
+│   └── assets\  net.css, net-common.js, exam-data.json
+├── <span style="color:var(--amber)">Parallel\</span>               гл.7 — Параллельные вычисления
+│   ├── index.html, super\, exam\  (3 страницы)
+│   └── assets\  parallel.css, parallel-common.js, exam-data.json
+└── <span style="color:var(--green)">Dev\</span>                    гл.8 — Веб-разработка
+    ├── index.html, css\, js\, builder\  (4 страницы)
+    └── assets\  dev.css, dev-common.js, blocks-data.json</div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <p><strong>Alterna</strong> — интерактивный учебник информатики 7–11 класс · <a href="https://alterna-edu.ru">alterna-edu.ru</a></p>
+    <p style="margin-top:4px">Отчёт сгенерирован из документации проекта · Июнь 2026</p>
+  </div>
+</footer>
+
+</body>
+</html>
