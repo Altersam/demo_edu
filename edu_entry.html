@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Вход в EDU</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--text:#172033;--muted:#667085;--border:#dfe6ef;--primary:#2563eb;--primary-hover:#1d4ed8;--ok:#15803d;--bad:#b42318;--shadow:0 18px 50px rgba(23,32,51,.10)}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--text);background:radial-gradient(circle at top left,rgba(37,99,235,.1),transparent 34%),linear-gradient(180deg,#f7faff 0%,var(--bg) 100%);display:flex;align-items:center;justify-content:center;padding:20px}
+.card{width:100%;max-width:520px;background:var(--card);border:1px solid rgba(223,230,239,.9);border-radius:24px;box-shadow:var(--shadow);padding:28px}
+.logo{width:54px;height:54px;border-radius:16px;background:linear-gradient(135deg,#2563eb,#60a5fa);color:#fff;display:grid;place-items:center;font-weight:900;font-size:18px;margin-bottom:20px}
+h1{margin:0 0 8px;font-size:30px;letter-spacing:-.03em}.subtitle{margin:0 0 24px;color:var(--muted);line-height:1.5}
+.status{display:none;margin-bottom:18px;padding:12px 14px;border-radius:12px;font-size:14px;line-height:1.45}
+.status.error{display:block;background:#fef3f2;color:var(--bad);border:1px solid #fecdca}.status.ok{display:block;background:#ecfdf3;color:var(--ok);border:1px solid #abefc6}
+.field{margin-bottom:14px}.field label{display:block;margin-bottom:7px;font-size:13px;font-weight:800;color:#344054}
+.credential{display:flex;gap:8px}.credential input{flex:1;min-width:0;border:1px solid var(--border);border-radius:12px;background:#f9fbfd;padding:13px 14px;font:inherit;font-weight:700;color:var(--text);outline:none}
+button,.edu-button{border:0;border-radius:12px;font:inherit;font-weight:800;cursor:pointer}.copy{padding:0 13px;background:#eef2f7;color:#344054;white-space:nowrap}
+.main-actions{display:grid;gap:10px;margin-top:22px}.edu-button{display:block;width:100%;text-align:center;text-decoration:none;background:var(--primary);color:#fff;padding:14px 16px}.edu-button:hover{background:var(--primary-hover)}
+.secondary{width:100%;padding:13px 16px;background:#eef2f7;color:#344054}.hint{margin-top:18px;padding-top:16px;border-top:1px solid #edf0f4;color:var(--muted);font-size:12px;line-height:1.5}.hidden{display:none!important}
+@media(max-width:520px){body{padding:12px}.card{padding:22px 18px;border-radius:20px}h1{font-size:26px}.credential{flex-direction:column}.copy{min-height:44px}}
+</style>
+</head>
+<body>
+<main class="card">
+<div class="logo">EDU</div>
+<h1>Вход в образовательную систему</h1>
+<p class="subtitle">Данные для входа сформированы автоматически.</p>
+
+<div id="status" class="status"></div>
+
+<div id="credentialsBlock" class="hidden">
+  <div class="field">
+    <label for="login">Логин</label>
+    <div class="credential">
+      <input id="login" type="text" readonly>
+      <button class="copy" type="button" onclick="copyValue('login', this)">Копировать</button>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="password">Пароль</label>
+    <div class="credential">
+      <input id="password" type="text" readonly>
+      <button class="copy" type="button" onclick="copyValue('password', this)">Копировать</button>
+    </div>
+  </div>
+
+  <div class="main-actions">
+    <button class="secondary" type="button" id="copyBothBtn">Скопировать логин и пароль</button>
+    <a class="edu-button" id="eduButton" href="https://edu.fa.ru/" rel="noopener">Перейти в EDU</a>
+  </div>
+</div>
+
+<div class="hint">
+  Ссылка должна содержать параметр <b>id</b>, например:<br>
+  <code>edu_entry.html?id=123456</code>
+</div>
+</main>
+
+<script>
+// ===== НАСТРОЙКА =====
+// Замени фразу на свою.
+const PHRASE = "SuperSecretPhrase";
+const EDU_URL = "https://edu.fa.ru/";
+// =====================
+
+const params = new URLSearchParams(window.location.search);
+const rawId = params.get("id");
+
+const statusEl = document.getElementById("status");
+const block = document.getElementById("credentialsBlock");
+const loginEl = document.getElementById("login");
+const passwordEl = document.getElementById("password");
+const eduButton = document.getElementById("eduButton");
+const copyBothBtn = document.getElementById("copyBothBtn");
+
+eduButton.href = EDU_URL;
+
+function showStatus(text,type){
+  statusEl.textContent=text;
+  statusEl.className="status "+type;
+}
+
+function normalizeId(value){
+  if(!value) return null;
+  const trimmed=value.trim();
+  if(!/^\d+$/.test(trimmed)) return null;
+  return trimmed;
+}
+
+const studentId = normalizeId(rawId);
+
+if(!studentId){
+  showStatus("Не удалось определить ID ученика. Откройте страницу по ссылке из ЭлЖура.","error");
+}else{
+  const credentials = PHRASE + studentId;
+  loginEl.value = credentials;
+  passwordEl.value = credentials;
+  block.classList.remove("hidden");
+  showStatus("Ученик определён. Данные для входа готовы.","ok");
+}
+
+async function copyText(text){
+  try{
+    await navigator.clipboard.writeText(text);
+    return true;
+  }catch(e){
+    const t=document.createElement("textarea");
+    t.value=text;t.style.position="fixed";t.style.opacity="0";
+    document.body.appendChild(t);t.select();
+    const ok=document.execCommand("copy");t.remove();return ok;
+  }
+}
+
+async function copyValue(id,button){
+  const value=document.getElementById(id).value;
+  if(!value) return;
+  if(await copyText(value)){
+    const old=button.textContent;
+    button.textContent="Скопировано";
+    setTimeout(()=>button.textContent=old,1200);
+  }
+}
+
+copyBothBtn.addEventListener("click",async()=>{
+  const text="Логин: "+loginEl.value+"\nПароль: "+passwordEl.value;
+  if(await copyText(text)){
+    const old=copyBothBtn.textContent;
+    copyBothBtn.textContent="Скопировано";
+    setTimeout(()=>copyBothBtn.textContent=old,1200);
+  }
+});
+</script>
+</body>
+</html>
